@@ -18,7 +18,11 @@ class ProductGridTile extends StatelessWidget {
         footer: buildGridFooterBar(context),
         child: GestureDetector(
           onTap: () {
-            print('Go to product detail screen');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => ProductDetailScreen(product),
+              ),
+            );
           },
           child: Image.network(
             product.imageUrl,
@@ -28,35 +32,32 @@ class ProductGridTile extends StatelessWidget {
       ),
     );
   }
-  Widget buildGridFooterBar(BuildContext context) {
-    return GridTileBar(...);
-  }
-}
 
-Widget buildGridFooterBar(BuildContext context) {
-  return GridTileBar(
-    backgroundColor: Colors.black87,
-    leading: IconButton(
-      icon: Icon(
-        product.isFavorite ? Icons.favorite : Icons.favorite_border,
+  Widget buildGridFooterBar(BuildContext context) {
+    return GridTileBar(
+      backgroundColor: Colors.black87,
+      leading: IconButton(
+        icon: Icon(
+          product.isFavorite ? Icons.favorite : Icons.favorite_border,
+        ),
+        color: Theme.of(context).colorScheme.secondary,
+        onPressed: () {
+          print('Toggle a favorite product');
+        },
       ),
-      color: Theme.of(context).colorScheme.secondary,
-      onPressed: () {
-        print('Toggle a favorite product');
-      },
-    ),
-    title: Text(
-      product.title,
-      textAlign: TextAlign.center,
-    ),
-    trailing: IconButton(
-      icon: const Icon(
-        Icons.shopping_cart,
+      title: Text(
+        product.title,
+        textAlign: TextAlign.center,
       ),
-      onPressed: () {
-        print('Add item to cart');
-      },
-      color: Theme.of(context).colorScheme.secondary,
-    ),
-  );
+      trailing: IconButton(
+        icon: const Icon(
+          Icons.shopping_cart,
+        ),
+        onPressed: () {
+          print('Add item to cart');
+        },
+        color: Theme.of(context).colorScheme.secondary,
+      ),
+    );
+  }
 }
