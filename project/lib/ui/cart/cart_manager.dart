@@ -1,5 +1,4 @@
 import 'package:project/models/product.dart';
-
 import '../../models/cart_item.dart';
 
 class CartManager {
@@ -31,4 +30,8 @@ class CartManager {
     });
     return total;
   }
+
+  void addItem(Product product) {}
+
+  void removeSingleItem(String s) {}
 }
