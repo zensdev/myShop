@@ -26,19 +26,19 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.payment),
-            title: const Text('Order'),
+            title: const Text('Orders'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+                .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Manager Products'),
+            title: const Text('Manage Products'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(UserProductsScreen.routeName);
+                .pushReplacementNamed(UserProductsScreen.routeName);
             },
           ),
         ],

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:project/ui/cart/cart_manager.dart';
 import 'package:project/ui/cart/cart_screen.dart';
+import 'package:provider/provider.dart';
+
 import 'products_grid.dart';
 import '../shared/app_drawer.dart';
+import '../cart/cart_manager.dart';
 import 'top_right_badge.dart';
 
 enum FilterOptions { favorites, all }
 
-class ProductOverviewScreen extends StatefulWidget {
-  const ProductOverviewScreen({super.key});
+class ProductsOverviewScreen extends StatefulWidget {
+  const ProductsOverviewScreen({super.key});
 
   @override
-  State<ProductOverviewScreen> createState() => _ProductsOverviewScreenState();
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
 
-class _ProductsOverviewScreenState extends State<ProductOverviewScreen> {
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
 
   @override
@@ -28,22 +30,25 @@ class _ProductsOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: ProductGrid(_showOnlyFavorites),
+      body: ProductsGrid(_showOnlyFavorites),
     );
   }
 
   Widget buildShoppingCartIcon() {
-    return TopRightBadge(
-      data: CartManager().productCount,
-      child: IconButton(
-        icon: const Icon(
-          Icons.shopping_cart,
+    return Consumer<CartManager>(builder: (ctx, cartManager, child) {
+      return TopRightBadge(
+        data: cartManager.productCount,
+        child: IconButton(
+          icon: const Icon(
+            Icons.shopping_cart,
+          ),
+          onPressed: () {
+            Navigator.of(ctx).pushNamed(CartScreen.routeName);
+            //print('Go to cart screen');
+          },
         ),
-        onPressed: () {
-          Navigator.of(context).pushNamed(CartScreen.routeName);
-        },
-      ),
-    );
+      );
+    });
   }
 
   Widget buildProductFilterMenu() {
@@ -67,7 +72,7 @@ class _ProductsOverviewScreenState extends State<ProductOverviewScreen> {
         ),
         const PopupMenuItem(
           value: FilterOptions.all,
-          child: Text('Show All'),
+          child: Text('Show ALL'),
         ),
       ],
     );
